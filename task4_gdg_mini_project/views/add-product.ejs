@@ -1,0 +1,55 @@
+<%- include('partials/header') %>
+
+<div class="container" style="max-width: 600px;">
+    <h1><i class="fas fa-plus-circle"></i> Add New Product</h1>
+    <p>Fill in the details below to add a product to the catalog.</p>
+
+    <div class="card" style="text-align: left; padding: 25px;">
+        <form action="/products" method="POST">
+            <div class="form-group">
+                <label>Product Name</label>
+                <input type="text" name="name" class="input-field" placeholder="e.g. Wireless Mouse" required>
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <textarea name="description" class="input-field" placeholder="Briefly describe the product..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Category</label>
+                <select name="category" class="input-field">
+                    <option value="Electronics">Electronics</option>
+                    <option value="Clothing">Clothing</option>
+                    <option value="Home">Home</option>
+                    <option value="Accessories">Accessories</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Price </label>
+                <input type="number" name="price" step="0.01" class="input-field" placeholder="0.00" required>
+            </div>
+
+            <div class="form-group">
+                <label>Stock Quantity</label>
+                <input type="number" name="stock" class="input-field" placeholder="10" required>
+            </div>
+
+            <div class="form-group">
+                <label>Image URL</label>
+                <input type="url" name="imageurl" class="input-field" placeholder="https://example.com/image.jpg" required>
+            </div>
+
+            <button type="submit" class="btn btn-add" style="width: 100%; margin-top: 20px;">
+                Save Product
+            </button>
+        </form>
+    </div>
+    
+    <div style="margin-top: 15px;">
+        <a href="/pages/products"><i class="fas fa-arrow-left"></i> Back to Catalog</a>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

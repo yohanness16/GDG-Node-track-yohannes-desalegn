@@ -1,0 +1,21 @@
+<%- include('partials/header') %>
+<h1>Available Products</h1>
+<div class="product-grid">
+    <% data.forEach(product => { %>
+        <div class="card">
+            <img src="<%= product.imageurl %>" alt="Product">
+            <h3><%= product.name %></h3>
+            <p class="price"><strong>  <%= product.price %> birr</strong></p>
+            <p>Stock: <%= product.stock %></p>
+            
+            <form action="/cart/create" method="POST">
+                <input type="hidden" name="productId" value="<%= product._id %>">
+                <input type="number" name="quantity" value="1" min="1" max="<%= product.stock %>" class="input-field">
+                <button type="submit" class="btn btn-add">
+                    <i class="fas fa-cart-plus"></i> Add to Cart
+                </button>
+            </form>
+        </div>
+    <% }) %>
+</div>
+<%- include('partials/footer') %>

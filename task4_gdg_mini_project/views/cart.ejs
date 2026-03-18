@@ -1,0 +1,60 @@
+<%- include('partials/header') %>
+<h1>Shopping Cart</h1>
+<% if (data && data.items.length > 0) { %>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Subtotal</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% data.items.forEach(item => { %>
+                <tr>
+                    <td><%= item.productId.name %></td>
+                    <td> <%= item.productId.price %> birr </td>
+                    <td>
+                        <form action="/cart/<%= data._id %>/update/<%= item.productId._id %>?_method=PUT" method="POST" style="display: flex; gap: 5px;">
+                            <input type="number" name="quantity" value="<%= item.quantity %>" min="1" style="width: 50px;">
+                            <button type="submit" class="btn-small"><i class="fas fa-sync"></i></button>
+                        </form>
+                    </td>
+                    <td> <%= (item.productId.price * item.quantity).toFixed(2) %> birr </td>
+                    <td>
+                        <form action="/cart/<%= data._id %>/item/<%= item.productId._id %>?_method=DELETE" method="POST">
+                            <button type="submit" class="btn-del" onclick="return confirm('Remove this item?')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+
+    <div style="text-align: right; margin-top: 30px; background: #fff; padding: 20px; border-radius: 8px;">
+        <h2>Total: <%= data.totalPrice.toFixed(2) %> birr </h2>
+        <hr>
+        <form action="/orders" method="POST" style="max-width: 400px; display: inline-block; text-align: left;">
+            <input type="hidden" name="cartId" value="<%= data._id %>">
+            <label>Customer Details:</label>
+            <input type="text" name="customerInfo[name]" placeholder="Full Name" required class="input-field">
+            <input type="email" name="customerInfo[email]" placeholder="Email" required class="input-field">
+            <textarea name="customerInfo[address]" placeholder="Shipping Address" required class="input-field"></textarea>
+            <button type="submit" class="btn btn-checkout" style="width: 100%;">
+                Complete Order <i class="fas fa-arrow-right"></i>
+            </button>
+        </form>
+    </div>
+<% } else { %>
+    <div style="text-align: center; padding: 50px;">
+        <i class="fas fa-shopping-basket fa-3x" style="color: #ccc;"></i>
+        <p>Your cart is empty.</p>
+        <a href="/pages/products" class="btn btn-add" style="text-decoration: none; display: inline-block; width: auto; padding: 10px 20px;">Start Shopping</a>
+    </div>
+<% } %>
+
+<%- include('partials/footer') %>
